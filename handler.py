@@ -49,6 +49,8 @@ def remove_user_frm_db(event, context):
     return {
         'statusCode': 200,
         'headers': {
+            "Content-Type": "text/html",
+            "Access-Control-Allow_Headers": "Content-Type",
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'Get'
         }
