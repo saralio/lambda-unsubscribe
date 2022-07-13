@@ -12,8 +12,7 @@ def remove_user_frm_db(event, context):
 
     region = get_env_var('MY_REGION')
     env = get_env_var('MY_ENV')
-    #TODO: [SAR-110] change the table name to `registered-users-{env}`
-    table = f'user-email-preference'
+    table = f'deregistered-users-{env}'
 
     db = DynamoDB(table=table, env=env, region=region)
     db.put_item(
@@ -22,7 +21,6 @@ def remove_user_frm_db(event, context):
     print('Updated dynamodb successfully')
 
     # updating event bridge rule
-    # TODO: [SAR-111] check why rules are getting disabled only on second tries
     rule_client = boto3.client('events')
     rule_name = f'RuleFor_{email_id.replace("@", "_").replace(".", "_")}'
     response = rule_client.disable_rule(Name=rule_name)
