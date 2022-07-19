@@ -61,6 +61,7 @@ commands:
     steps:
       - run: pip3 install -r ./requirements/requirements-<< parameters.branch_name >>.txt
       - run: |
+          sls invoke local -f remove_user_frm_db -d '<< parameters.test_data >>'
           statusCode=$(sls invoke local -f remove_user_frm_db -d '<< parameters.test_data >>' 2>/dev/null | sed 1,6d | python3 -c 'import sys,json; print(json.load(sys.stdin)["statusCode"])')
           if [[ $statusCode != 200 ]]; then 
             echo $statusCode
